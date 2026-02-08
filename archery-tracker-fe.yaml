@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: archery-frontend
+  labels:
+    app: archery-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: archery-frontend
+  template:
+    metadata:
+      labels:
+        app: archery-frontend
+    spec:
+      containers:
+      - name: archery-frontend
+        image: ghcr.io/jeammm/archery-frontend:0.1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: archery-frontend
+  labels:
+    app: archery-frontend
+spec:
+  type: ClusterIP
+  selector:
+    app: archery-frontend
+  ports:
+  - port: 80
+    targetPort: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: archery-frontend-ingress
+spec:
+  ingressClassName: traefik
+  rules:
+  - host: archery-tracker.jeammm.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: archery-frontend
+            port:
+              number: 80
