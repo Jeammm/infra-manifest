@@ -42,7 +42,7 @@ metadata:
   name: whoami-ingress
   namespace: whoami
 spec:
-  ingressClassName: nginx
+  ingressClassName: traefik
   rules:
     - host: whoami.jeammm.com
       http:

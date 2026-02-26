@@ -196,6 +196,7 @@ Push the control plane repo; ArgoCD will create the `my-app` Application and syn
 
 ## 8. Troubleshooting
 
+- **argocd.jeammm.com not loading**: See [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) (tunnel pod, ingress controller name, ingress class, DNS).
 - **Error 1033**: Tunnel not connected. Check pod logs: `microk8s kubectl logs -n cloudflare-tunnel deployment/cloudflared`. Ensure Secret exists and tunnel name in config matches `cloudflared tunnel create` name.
 - **Kubelet certificate / TLS on logs**: If node IP changed, you may see certificate errors when fetching logs. Run the logs command on the node, or regenerate the kubelet certificate (MicroK8s docs).
 - **ArgoCD sync**: In UI, check Application sync status and events. Ensure repo URL and path are correct and the destination namespace exists (or is created by the app manifests).
