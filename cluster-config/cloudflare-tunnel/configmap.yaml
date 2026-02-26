@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloudflared-config
+  namespace: cloudflare-tunnel
+data:
+  config.yml: |
+    tunnel: jeammm-cluster
+    credentials-file: /etc/cloudflared/credentials.json
+    metrics: 0.0.0.0:2000
+    no-autoupdate: true
+    ingress:
+      - hostname: argocd.jeammm.com
+        service: http://nginx-ingress-microk8s-controller.ingress.svc.cluster.local:80
+      - hostname: whoami.jeammm.com
+        service: http://nginx-ingress-microk8s-controller.ingress.svc.cluster.local:80
+      - service: http_status:404
