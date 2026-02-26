@@ -1,0 +1,18 @@
+# MicroK8s deploys the nginx ingress as a DaemonSet with no ClusterIP Service.
+# This Service lets in-cluster pods (e.g. cloudflared) reach the ingress controller.
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-ingress-microk8s-controller
+  namespace: ingress
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+    - name: https
+      port: 443
+      targetPort: 443
+  selector:
+    name: nginx-ingress-microk8s
