@@ -1,0 +1,19 @@
+# guestbook at https://guestbook.jeammm.com (Cloudflare Tunnel creates DNS).
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: guestbook
+  namespace: guestbook
+spec:
+  ingressClassName: cloudflare-tunnel
+  rules:
+    - host: guestbook.jeammm.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: guestbook-ui
+                port:
+                  number: 80
