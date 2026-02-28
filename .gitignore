@@ -3,6 +3,7 @@
 .env
 .env.local
 .env.*.local
+temp-secret.yaml
 
 # Optional: uncomment if you keep a copy of the script with secrets
 # cloudflare-tunnel-helm.sh
