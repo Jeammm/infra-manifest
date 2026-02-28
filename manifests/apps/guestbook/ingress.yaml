@@ -4,6 +4,8 @@ kind: Ingress
 metadata:
   name: guestbook
   namespace: guestbook
+  annotations:
+    kubernetes.io/ingress.class: cloudflare-tunnel
 spec:
   ingressClassName: cloudflare-tunnel
   rules:

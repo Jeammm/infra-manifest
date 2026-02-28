@@ -4,6 +4,8 @@ kind: Ingress
 metadata:
   name: whoami
   namespace: whoami
+  annotations:
+    kubernetes.io/ingress.class: cloudflare-tunnel
 spec:
   ingressClassName: cloudflare-tunnel
   rules:
