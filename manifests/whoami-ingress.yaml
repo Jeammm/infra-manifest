@@ -1,0 +1,19 @@
+# whoami at https://whoami.jeammm.com (Cloudflare Tunnel creates DNS).
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: whoami
+  namespace: whoami
+spec:
+  ingressClassName: cloudflare-tunnel
+  rules:
+    - host: whoami.jeammm.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: whoami
+                port:
+                  number: 80
