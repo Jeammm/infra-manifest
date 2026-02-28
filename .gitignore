@@ -1,0 +1,8 @@
+# Cloudflare credentials (never commit)
+.env.cloudflare
+.env
+.env.local
+.env.*.local
+
+# Optional: uncomment if you keep a copy of the script with secrets
+# cloudflare-tunnel-helm.sh
