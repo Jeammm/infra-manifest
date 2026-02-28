@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cloudflare-ingress
+  namespace: argocd
+spec:
+  project: default
+  source:
+    chart: cloudflare-tunnel-ingress-controller
+    repoURL: https://helm.strrl.dev
+    targetRevision: 0.1.1
+    helm:
+      values: |
+        cloudflare:
+          tunnelName: "k3s-jeammm"
+          secretName: "cloudflare-creds"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: cloudflare-tunnel-ingress-controller
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    createNamespace: true
