@@ -1,11 +1,12 @@
-# Apply this once to register this repo as the ArgoCD control plane.
+# App-of-apps: apply once to register this repo as the control plane.
 #   kubectl apply -f bootstrap/root-app.yaml
-# ArgoCD will then sync from https://github.com/Jeammm/infra-manifest (path: manifests/).
+# This Application syncs the "apps/" directory, which contains ArgoCD Application
+# manifests. Each of those apps then syncs its own source (this repo or your app repos).
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: infra-manifest
+  name: apps
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -13,14 +14,12 @@ spec:
   project: default
   source:
     repoURL: https://github.com/Jeammm/infra-manifest.git
-    path: manifests
+    path: apps
     targetRevision: main
   destination:
     server: https://kubernetes.default.svc
-    namespace: default
+    namespace: argocd
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
-    syncOptions:
-      - CreateNamespace=true

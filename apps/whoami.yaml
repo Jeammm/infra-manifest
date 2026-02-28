@@ -1,0 +1,21 @@
+# Test app: whoami at whoami.jeammm.com.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: whoami
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Jeammm/infra-manifest.git
+    path: manifests/apps/whoami
+    targetRevision: main
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: whoami
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

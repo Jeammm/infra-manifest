@@ -10,7 +10,6 @@
 #             - /usr/local/bin/argocd-server
 #             - '--insecure'
 
----
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
