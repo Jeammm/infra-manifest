@@ -14,18 +14,17 @@ spec:
         cloudflare:
           tunnelName: "k3s-jeammm"
           secretName: "cloudflare-creds"
-        controller:
-          env:
-            - name: CLOUDFLARE_API_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: cloudflare-creds
-                  key: CLOUDFLARE_API_TOKEN
-            - name: CLOUDFLARE_ACCOUNT_ID
-              valueFrom:
-                secretKeyRef:
-                  name: cloudflare-creds
-                  key: CLOUDFLARE_ACCOUNT_ID
+        env:
+          - name: CLOUDFLARE_API_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: cloudflare-creds
+                key: CLOUDFLARE_API_TOKEN
+          - name: CLOUDFLARE_ACCOUNT_ID
+            valueFrom:
+              secretKeyRef:
+                name: cloudflare-creds
+                key: CLOUDFLARE_ACCOUNT_ID
   destination:
     server: https://kubernetes.default.svc
     namespace: cloudflare-tunnel-ingress-controller
