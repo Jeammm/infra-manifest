@@ -13,7 +13,6 @@ spec:
       values: |
         cloudflare:
           tunnelName: "k3s-jeammm"
-          secretName: "cloudflare-creds"
         env:
           - name: CLOUDFLARE_API_TOKEN
             valueFrom:
