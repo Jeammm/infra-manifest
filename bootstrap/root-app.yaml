@@ -14,7 +14,9 @@ spec:
   project: default
   source:
     repoURL: https://github.com/Jeammm/infra-manifest.git
-    path: apps
+    path: .
+    directory:
+      recurse: true
     targetRevision: main
   destination:
     server: https://kubernetes.default.svc
