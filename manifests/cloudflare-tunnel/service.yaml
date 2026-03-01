@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloudflared-connector-headless
+  namespace: cloudflare-tunnel
+  labels:
+    app.kubernetes.io/component: controlled-cloudflared
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "44483"
+spec:
+  clusterIP: None
+  selector:
+    app: controlled-cloudflared-connector
+    strrl.dev/cloudflare-tunnel-ingress-controller: controlled-cloudflared-connector
+  ports:
+    - name: metrics
+      port: 44483
+      protocol: TCP

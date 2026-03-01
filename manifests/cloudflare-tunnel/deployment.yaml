@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudflare-tunnel-controller
+  namespace: cloudflare-tunnel
+  labels:
+    app: cloudflare-tunnel-controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloudflare-tunnel-controller
+  template:
+    metadata:
+      labels:
+        app: cloudflare-tunnel-controller
+    spec:
+      serviceAccountName: cloudflare-tunnel-controller
+      containers:
+        - name: controller
+          image: cr.strrl.dev/strrl/cloudflare-tunnel-ingress-controller:0.0.22
+          imagePullPolicy: IfNotPresent
+          command:
+            - cloudflare-tunnel-ingress-controller
+            - --ingress-class=cloudflare-tunnel
+            - --controller-class=strrl.dev/cloudflare-tunnel-ingress-controller
+            - --cloudflare-api-token=$(CLOUDFLARE_API_TOKEN)
+            - --cloudflare-account-id=$(CLOUDFLARE_ACCOUNT_ID)
+            - --cloudflare-tunnel-name=$(CLOUDFLARE_TUNNEL_NAME)
+            - --namespace=$(NAMESPACE)
+            - --cloudflared-protocol=auto
+            - --cluster-domain=cluster.local
+          env:
+            - name: CLOUDFLARE_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: cloudflare-api
+                  key: api-token
+            - name: CLOUDFLARE_ACCOUNT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: cloudflare-api
+                  key: cloudflare-account-id
+            - name: CLOUDFLARE_TUNNEL_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: cloudflare-api
+                  key: cloudflare-tunnel-name
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: CLOUDFLARED_IMAGE
+              value: cloudflare/cloudflared:latest
+            - name: CLOUDFLARED_IMAGE_PULL_POLICY
+              value: IfNotPresent
+            - name: CLOUDFLARED_REPLICA_COUNT
+              value: "2"
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi

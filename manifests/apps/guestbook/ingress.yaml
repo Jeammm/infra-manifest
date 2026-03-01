@@ -1,11 +1,8 @@
-# guestbook at https://guestbook.jeammm.com (Cloudflare Tunnel creates DNS).
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: guestbook
   namespace: guestbook
-  annotations:
-    kubernetes.io/ingress.class: cloudflare-tunnel
 spec:
   ingressClassName: cloudflare-tunnel
   rules:
