@@ -16,8 +16,6 @@ spec:
       values: |
         cloudflare:
           tunnelName: "k3s-jeammm"
-          apiToken: "whatever"
-          accountID: "thisshitis"
   destination:
     server: https://kubernetes.default.svc
     namespace: cloudflare-tunnel-ingress-controller
