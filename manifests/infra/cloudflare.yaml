@@ -16,17 +16,12 @@ spec:
       values: |
         cloudflare:
           tunnelName: "k3s-jeammm"
-        env:
-          - name: CLOUDFLARE_API_TOKEN
-            valueFrom:
-              secretKeyRef:
-                name: cloudflare-creds
-                key: CLOUDFLARE_API_TOKEN
-          - name: CLOUDFLARE_ACCOUNT_ID
-            valueFrom:
-              secretKeyRef:
-                name: cloudflare-creds
-                key: CLOUDFLARE_ACCOUNT_ID
+          # Chart reads credentials from this secret (env in values is ignored by the chart).
+          secretRef:
+            name: cloudflare-creds
+            apiTokenKey: CLOUDFLARE_API_TOKEN
+            accountIDKey: CLOUDFLARE_ACCOUNT_ID
+            tunnelNameKey: CLOUDFLARE_TUNNEL_NAME
   destination:
     server: https://kubernetes.default.svc
     namespace: cloudflare-tunnel-ingress-controller
