@@ -3,12 +3,14 @@ kind: Application
 metadata:
   name: archery-tracker
   namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
-    repoURL: https://github.com/Jeammm/infra-manifest.git
-    path: manifests/apps/archery-tracker
+    repoURL: https://github.com/jeammm/archery-tracker
     targetRevision: main
+    path: k8s
   destination:
     server: https://kubernetes.default.svc
     namespace: archery-tracker
@@ -18,3 +20,4 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+      - ServerSideApply=true
