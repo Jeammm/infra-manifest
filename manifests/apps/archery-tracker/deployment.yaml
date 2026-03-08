@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: archery-tracker
-  namespace: archery-tracker
+  name: archery-tracker-fe-only
+  namespace: archery-tracker-fe-only
   labels:
-    app: archery-tracker
+    app: archery-tracker-fe-only
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: archery-tracker
+      app: archery-tracker-fe-only
   template:
     metadata:
       labels:
-        app: archery-tracker
+        app: archery-tracker-fe-only
     spec:
       containers:
-        - name: archery-tracker
+        - name: archery-tracker-fe-only
           image: ghcr.io/jeammm/archery-frontend:0.1
           ports:
             - containerPort: 80

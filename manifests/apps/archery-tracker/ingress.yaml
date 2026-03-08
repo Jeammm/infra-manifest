@@ -1,8 +1,8 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: archery-tracker
-  namespace: archery-tracker
+  name: archery-tracker-fe-only
+  namespace: archery-tracker-fe-only
 spec:
   ingressClassName: cloudflare-tunnel
   rules:
@@ -13,6 +13,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: archery-tracker
+                name: archery-tracker-fe-only
                 port:
                   number: 80
